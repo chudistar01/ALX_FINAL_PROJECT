@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-voter_bp = Blueprint('voter', __name__, url_prefix='/voter')
+voters_bp = Blueprint('voters', __name__, url_prefix='/voter')
 
 from . import voters_login

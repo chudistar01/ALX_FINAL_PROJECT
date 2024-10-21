@@ -1,8 +1,8 @@
 from flask import render_template, request, flash, redirect, url_for, session
-from . import voter_bp
+from . import voters_bp
 from .. import mongo
 
-@voter_bp.route('/login', methods=['GET', 'POST'])
+@voters_bp.route('/login', methods=['GET', 'POST'])
 def login_voter():
     if request.method == 'POST':
         voter_id = request.form.get('voter_id')

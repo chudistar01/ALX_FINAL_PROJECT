@@ -2,7 +2,7 @@ from flask import render_template, request, flash, redirect, url_for, session
 from . import admin_bp
 from .. import mongo
 
-@admin_bp.route('/admin/register_candidate', methods=['GET', 'POST'])
+@admin_bp.route('/register_candidate', methods=['GET', 'POST'])
 def register_candidate():
     # Check if admin is logged in
     if 'admin_id' not in session:

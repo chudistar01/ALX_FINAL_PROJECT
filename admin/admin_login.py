@@ -3,8 +3,8 @@ from . import admin_bp
 from .. import mongo
 
 
-@admin_bp.route('/admin/register', methods=['GET', 'POST'])
-def register_admin():
+@admin_bp.route('/login', methods=['GET', 'POST'])
+def login_admin():
     if request.method == 'POST':
         # Get form data
         admin_id = request.form.get('admin_id')
