@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Senatorial Voting</title>
+</head>
+<body>
+    <h1>Vote for Senatorial Candidate in {{ voter_state }} - {{ voter_senatorial_district }}</h1>
+
+    <form method="POST">
+        {% for candidate in candidates %}
+            <div>
+                <input type="radio" name="candidate_id" value="{{ candidate['_id'] }}" required>
+                {{ candidate['name'] }} - {{ candidate['party'] }}
+            </div>
+        {% endfor %}
+        <button type="submit">Submit Vote</button>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

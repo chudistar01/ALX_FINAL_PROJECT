@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Admin Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Container and Table Styles */
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .voter-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .voter-list table th, .voter-list table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .voter-list table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .voter-list table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Form Styles */
+        .filter-form {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .filter-form h2 {
+            margin-top: 0;
+        }
+        .filter-form .form-group {
+            margin-bottom: 15px;
+        }
+        .filter-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .filter-form select, .filter-form input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin.create_voter') }}">Register Voter</a></li>
+                <li><a href="{{ url_for('admin.register_candidate') }}">Register Candidate</a></li>
+                <li><a href="{{ url_for('admin.create_presidential_election') }}">Presidential Elections</a></li>
+                <li><a href="{{ url_for('admin.create_gubernatorial_election') }}">Gubernatorial Elections</a></li>
+                <li><a href="{{ url_for('admin.create_senatorial_election') }}">Senatorial Election</a></li>
+                <li><a href="{{ url_for('admin.create_house_of_representative_election') }}">House of REP Election</a></li>
+                <li><a href="{{ url_for('admin.view_voters') }}">View Voter</a></li>                
+                <li><a href="{{ url_for('admin.login_admin') }}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+
+            <!-- Admin Info -->
+            <div class="admin-info">
+                <p><strong>Admin ID:</strong> {{ admin_id }}</p>
+                <p><strong>Username:</strong> {{ admin_username }}</p>
+            </div>
+
+            <!-- Search/Filter Form -->
+            <div class="filter-form">
+                <h2>Filter Voters</h2>
+                <form method="GET" action="{{ url_for('admin.admin_dashboard') }}">
+                    <div class="form-group">
+                        <label for="state_of_residence">State of Residence:</label>
+                        <select name="state_of_residence" id="state_of_residence">
+                            <option value="">--Select State--</option>
+                            {% for state in states %}
+                            <option value="{{ state }}">{{ state }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state_of_origin">State of Origin:</label>
+                        <select name="state_of_origin" id="state_of_origin">
+                            <option value="">--Select State--</option>
+                            {% for state in states %}
+                            <option value="{{ state }}">{{ state }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senatorial_district">Senatorial District:</label>
+                        <input type="text" name="senatorial_district" id="senatorial_district" placeholder="Enter District">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="federal_constituency">Federal Constituency:</label>
+                        <input type="text" name="federal_constituency" id="federal_constituency" placeholder="Enter Constituency">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Filter Voters</button>
+                </form>
+            </div>
+
+            <!-- Voter List -->
+            <div class="voter-list">
+                <h2>All Voters</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Voter ID</th>
+                            <th>Full Name</th>
+                            <th>State of Origin</th>
+                            <th>State of Residence</th>
+                            <th>Senatorial District</th>
+                            <th>Federal Constituency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for voter in voters %}
+                        <tr>
+                            <td>{{ voter.voter_id }}</td>
+                            <td>{{ voter.first_name }} {{ voter.middle_name }} {{ voter.last_name }}</td>
+                            <td>{{ voter.state_of_origin }}</td>
+                            <td>{{ voter.state_of_residence }}</td>
+                            <td>{{ voter.senatorial_district }}</td>
+                            <td>{{ voter.federal_constituency }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No voters found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    <div class="logout">
+        <a href="{{ url_for('admin.login_admin') }}" class="btn btn-danger">Logout</a>
+    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Voting System</p>
+    </footer>
+</body>
+</html>

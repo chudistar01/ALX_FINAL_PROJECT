@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Candidate</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Form container styling for a rectangular look */
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styling */
+        h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333333;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-top: 1rem;
+            color: #555555;
+            font-weight: bold;
+        }
+
+        /* Input styling */
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 0.5rem;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 1.5rem;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register Candidate</h2>
+        <form method="POST" action="{{ url_for('admin.register_candidate') }}">
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" required>
+
+            <label for="middle_name">Middle Name:</label>
+            <input type="text" name="middle_name">
+
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" required>
+
+            <label for="party">Party:</label>
+            <select name="party" id="party" required>
+                {% for party in parties %}
+                    <option value="{{ party }}">{{ party }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="position">Position:</label>
+            <select name="position" id="position" required>
+                {% for position in positions %}
+                    <option value="{{ position }}">{{ position }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="state">State:</label>
+            <select name="state" id="state" required onchange="updateDistrictsAndConstituencies()">
+                <option value="">Select State</option>
+                {% for state in states %}
+                    <option value="{{ state.name }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="senatorial_district">Senatorial District:</label>
+            <select name="senatorial_district" id="senatorial_district" required>
+                <option value="">Select Senatorial District</option>
+            </select>
+
+            <label for="federal_constituency">Federal Constituency:</label>
+            <select name="federal_constituency" id="federal_constituency" required>
+                <option value="">Select Federal Constituency</option>
+            </select>
+
+            <button type="submit">Register Candidate</button>
+        </form>
+    </div>
+
+    <script>
+        const statesData = {{ states | tojson }};
+        
+        function updateDistrictsAndConstituencies() {
+            const stateSelect = document.getElementById('state');
+            const selectedState = stateSelect.value;
+
+            const districtsSelect = document.getElementById('senatorial_district');
+            const constituenciesSelect = document.getElementById('federal_constituency');
+
+            districtsSelect.innerHTML = '<option value="">Select Senatorial District</option>';
+            constituenciesSelect.innerHTML = '<option value="">Select Federal Constituency</option>';
+
+            const stateData = statesData.find(state => state.name === selectedState);
+            
+            if (stateData) {
+                stateData.senatorial_districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.name;
+                    option.textContent = district.name;
+                    districtsSelect.appendChild(option);
+                });
+            }
+        }
+        
+        document.getElementById('senatorial_district').addEventListener('change', function() {
+            const districtSelect = this.value;
+            const stateSelect = document.getElementById('state').value;
+
+            const stateData = statesData.find(state => state.name === stateSelect);
+            const constituenciesSelect = document.getElementById('federal_constituency');
+            constituenciesSelect.innerHTML = '<option value="">Select Federal Constituency</option>';
+
+            if (stateData) {
+                const selectedDistrict = stateData.senatorial_districts.find(district => district.name === districtSelect);
+
+                if (selectedDistrict) {
+                    selectedDistrict.federal_constituencies.forEach(constituency => {
+                        const option = document.createElement('option');
+                        option.value = constituency;
+                        option.textContent = constituency;
+                        constituenciesSelect.appendChild(option);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

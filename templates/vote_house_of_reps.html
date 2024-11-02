@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of Representatives Election</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>House of Representatives Election</h1>
+
+        <!-- Display a message if there are any -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Election Instructions -->
+        <p>Please select a candidate for the House of Representatives election in your federal constituency.</p>
+
+        <!-- Display candidates if available -->
+        {% if candidates.count() > 0 %}
+            <form method="POST" action="{{ url_for('voters_bp.vote_house_of_reps') }}">
+                <div class="candidate-list">
+                    {% for candidate in candidates %}
+                        <div class="candidate">
+                            <input type="radio" name="candidate_id" value="{{ candidate._id }}" id="candidate-{{ candidate._id }}" required>
+                            <label for="candidate-{{ candidate._id }}">
+                                <strong>{{ candidate.name }}</strong> - {{ candidate.party }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Vote</button>
+            </form>
+        {% else %}
+            <p>No candidates available for your constituency at this time.</p>
+        {% endif %}
+
+        <a href="{{ url_for('say_hello') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</body>
+</html>

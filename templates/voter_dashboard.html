@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+    <div class="container" style="max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="text-align: center; color: #333;">Welcome, {{ voter.first_name }} {{ voter.last_name }}!</h1>
+        
+        <!-- Voter Details -->
+        <div class="voter-details" style="margin-bottom: 20px;">
+            <h2 style="color: #007BFF;">Your Details</h2>
+            <p><strong>Voter ID:</strong> {{ voter.voter_id }}</p>
+            <p><strong>State of Residence:</strong> {{ voter.state_of_residence }}</p>
+            <p><strong>Senatorial District:</strong> {{ voter.senatorial_district }}</p>
+            <p><strong>Federal Constituency:</strong> {{ voter.federal_constituency }}</p>
+            <p><strong>Date of Birth:</strong> {{ voter.date_of_birth }}</p>
+        </div>
+
+        <!-- Voting Options -->
+        <div class="voting-options" style="margin-bottom: 20px;">
+            <h2 style="color: #007BFF;">Available Elections</h2>
+            <ul style="list-style: none; padding: 0;">
+                <!-- Link to Presidential Election -->
+                <li style="margin-bottom: 10px;">
+                    <a href="{{ url_for('voters.vote_presidential') }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Vote in Presidential Election</a>
+                </li>
+
+                <!-- Link to Gubernatorial Election -->
+                {% if voter.state_of_residence %}
+                    <li style="margin-bottom: 10px;">
+                        <a href="{{ url_for('voters.vote_gubernatorial') }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Vote in Gubernatorial Election</a>
+                    </li>
+                {% endif %}
+
+                <!-- Link to Senatorial Election -->
+                {% if voter.senatorial_district %}
+                    <li style="margin-bottom: 10px;">
+                        <a href="{{ url_for('voters.vote_senatorial') }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Vote in Senatorial Election</a>
+                    </li>
+                {% endif %}
+
+                <!-- Link to House of Representatives Election -->
+                {% if voter.federal_constituency %}
+                    <li style="margin-bottom: 10px;">
+                        <a href="{{ url_for('voters.vote_house_of_reps') }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Vote in House of Representatives Election</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Logout Option -->
+        <div class="logout" style="text-align: center;">
+            <a href="{{ url_for('admin.logout_admin') }}" style="padding: 10px 20px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

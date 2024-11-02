@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Voter Dashboard</h1>
+        
+        <!-- Registration and Login Options -->
+        <div class="auth-actions">
+            <h2>Please Register or Log In</h2>
+            <ul>
+                <li>
+                    <a href="{{ url_for('voters_bp.register') }}" class="btn btn-primary">Register to Vote</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('voters_bp.login') }}" class="btn btn-primary">Login</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info">
+            <h2>Get Started</h2>
+            <p>You need to register or log in to access voting functionalities.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Presidential Election</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Form container styling */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Header styling */
+        h2 {
+            color: #333333;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: #555555;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-top: 1rem;
+            color: #555555;
+            font-weight: bold;
+        }
+
+        /* Input styling */
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 0.5rem;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 1.5rem;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* List styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        ul li {
+            padding: 8px 0;
+            color: #333333;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Flash message styling */
+        .flash-messages {
+            margin-top: 1rem;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flash-messages .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Presidential Election</h2>
+        <form method="POST" action="{{ url_for('admin.create_presidential_election') }}">
+            <label for="election_date">Election Date (YYYY-MM-DD):</label>
+            <input type="date" id="election_date" name="election_date" required>
+            
+            <button type="submit">Create Election</button>
+        </form>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

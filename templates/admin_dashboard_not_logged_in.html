@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1>Welcome to the Admin Dashboard</h1>
+            <!-- Admin Actions -->
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('admin.register_admin') }}">Register Admin</a></li>
+                    <li><a href="{{ url_for('admin.login_admin') }}">Login</a></li>
+                </ul>
+            </nav>
+
+            <!-- Info Section -->
+            <div class="info">
+                <h2>Please Register or Log In</h2>
+                <p>You need to register as an admin or log in to access admin functionalities.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Voting System</p>
+    </footer>
+</body>
+</html>

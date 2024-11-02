@@ -1,0 +1,20 @@
+{
+    "states": [
+        {
+            "name": "Anambra",
+            "senatorial_districts": [
+                {"name": "Anambra Central", "federal_constituencies": ["Awka North", "Awka South", "Anaocha", "Njikoka"]},
+                {"name": "Anambra North", "federal_constituencies": ["Nnewi North", "Nnewi South", "Ogbaru"]},
+                {"name": "Anambra South", "federal_constituencies": ["Aguata", "Orumba North", "Orumba South"]}
+            ]
+        },
+        {
+            "name": "Delta",
+            "senatorial_districts": [
+                {"name": "Delta Central", "federal_constituencies": ["Ughelli North", "Ughelli South", "Udu", "Ethiope East", "Ethiope West"]},
+                {"name": "Delta North", "federal_constituencies": ["Anioma", "Ika North East", "Ika South", "Ndokwa East", "Ndokwa West"]},
+                {"name": "Delta South", "federal_constituencies": ["Burutu", "Bomadi", "Patani", "Warri South", "Warri North"]}
+            ]
+        }
+    ]
+}

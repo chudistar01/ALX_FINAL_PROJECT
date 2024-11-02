@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Gubernatorial Election</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="date"],
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Gubernatorial Election</h2>
+        <form method="POST" action="{{ url_for('admin.create_gubernatorial_election') }}">
+            <label for="election_date">Election Date (YYYY-MM-DD):</label>
+            <input type="date" id="election_date" name="election_date" required>
+
+            <label for="state">States:</label>
+            <select id="state" name="state" required>
+                <option value="" disabled selected>Select a state</option>
+                {% for state in states %}
+                    <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Create Election</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Voter</title>
+    <style>
+        /* Root Styling */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #333;
+            --background-color: #f4f4f9;
+            --input-border-color: #ddd;
+            --radius: 8px;
+            --transition: 0.3s ease;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform var(--transition), box-shadow var(--transition);
+            text-align: center;
+        }
+        .container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        .form-group input,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid var(--input-border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            color: var(--secondary-color);
+            background-color: #fafafa;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color var(--transition), transform var(--transition);
+            margin-top: 1.5rem;
+        }
+        .btn:hover {
+            background-color: #388E3C;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Accessibility */
+        input:focus-visible,
+        select:focus-visible,
+        button:focus-visible {
+            outline: 2px dashed var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Voter</h2>
+        <form method="POST" action="{{ url_for('admin.create_voter') }}">
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+
+            <!-- Middle Name -->
+            <div class="form-group">
+                <label for="middle_name">Middle Name</label>
+                <input type="text" id="middle_name" name="middle_name" required>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender/Sex</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>  
+                </select>
+            </div>
+
+            <!-- State of Origin -->
+            <div class="form-group">
+                <label for="state_of_origin">State of Origin</label>
+                <select id="state_of_origin" name="state_of_origin" required>
+                    <option value="">Select State</option>
+                    {% for state in states_and_lgas %}
+                    <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Local Government of Origin -->
+            <div class="form-group">
+                <label for="local_government_of_origin">Local Government of Origin</label>
+                <select id="local_government_of_origin" name="local_government_of_origin" required>
+                    <option value="">Select Local Government</option>
+                </select>
+            </div>
+
+            <!-- State of Residence -->
+            <div class="form-group">
+                <label for="state_of_residence">State of Residence</label>
+                <select id="state_of_residence" name="state_of_residence" required>
+                    <option value="">Select State</option>
+                    {% for state in states_and_lgas %}
+                    <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Local Government of Residence -->
+            <div class="form-group">
+                <label for="local_government_of_residence">Local Government of Residence</label>
+                <select id="local_government_of_residence" name="local_government_of_residence" required>
+                    <option value="">Select Local Government</option>
+                </select>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="DOB">Date of Birth</label>
+                <input type="date" id="DOB" name="DOB" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Create Voter</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript to dynamically populate local governments based on selected state
+        const statesAndLgas = {{ states_and_lgas | tojson }};
+        
+        function populateLgas(stateSelectId, lgaSelectId) {
+            const stateSelect = document.getElementById(stateSelectId);
+            const lgaSelect = document.getElementById(lgaSelectId);
+
+            stateSelect.addEventListener('change', function () {
+                const selectedState = this.value;
+
+                // Clear existing options in LGA dropdown
+                lgaSelect.innerHTML = '<option value="">Select Local Government</option>';
+
+                // Populate LGAs if the state has LGAs listed
+                if (selectedState && statesAndLgas[selectedState]) {
+                    statesAndLgas[selectedState].forEach(lga => {
+                        const option = document.createElement('option');
+                        option.value = lga;
+                        option.textContent = lga;
+                        lgaSelect.appendChild(option);
+                    });
+                }
+            });
+        }
+
+        // Apply the populate function to both origin and residence fields
+        populateLgas('state_of_origin', 'local_government_of_origin');
+        populateLgas('state_of_residence', 'local_government_of_residence');
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Voting System</title>
+    <style>
+        /* Reset some default styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container styling */
+        .container {
+            text-align: center;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Header styling */
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Navigation styling */
+        nav ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #2c3e50;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 30px;
+            color: #aaa;
+        }
+
+        footer p {
+            font-size: 0.9em;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
+
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Voting System</h1>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin.login_admin') }}">Admin Login</a></li>
+                <li><a href="{{ url_for('admin.register_admin') }}">Register Admin</a></li>
+                <li><a href="{{ url_for('voters.login_voter') }}">Voter Login</a></li>
+            </ul>
+        </nav>
+
+        <footer>
+            <p>&copy; 2024 Voting System</p>
+        </footer>
+    </div>
+</body>
+</html>

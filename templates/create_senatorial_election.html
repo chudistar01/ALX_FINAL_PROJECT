@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Senatorial Election</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for contrast */
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333; /* Darker text for visibility */
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 600px; /* Centered container */
+            margin: auto;
+            padding: 20px;
+            background-color: #fff; /* White background for the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold; /* Bold labels for clarity */
+            color: #555; /* Slightly lighter text */
+        }
+        select, input[type="date"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc; /* Light border for inputs */
+            border-radius: 4px; /* Slightly rounded inputs */
+            font-size: 16px; /* Increased font size */
+            transition: border-color 0.3s; /* Smooth border color change */
+        }
+        select:focus, input[type="date"]:focus {
+            border-color: #4CAF50; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+        button {
+            margin-top: 20px;
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            border: none; /* No border for buttons */
+            cursor: pointer;
+            font-weight: bold; /* Bold text for buttons */
+            transition: background-color 0.3s; /* Smooth background change */
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        #senatorial_district {
+            display: none; /* Initially hide the senatorial district dropdown */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Senatorial Election</h2>
+        <form method="POST" action="{{ url_for('admin.create_senatorial_election') }}">
+            <label for="election_date">Election Date (YYYY-MM-DD):</label>
+            <input type="date" id="election_date" name="election_date" required>
+
+            <label for="state">States:</label>
+            <select id="state" name="state" required onchange="updateDistricts()">
+                <option value="">Select a state</option>
+                {% for state in states %}
+                    <option value="{{ state.name }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="senatorial_district">Senatorial Districts:</label>
+            <select id="senatorial_district" name="senatorial_district" multiple required>
+                <!-- District options will be populated here based on selected state -->
+            </select>
+
+            <button type="submit">Create Election</button>
+        </form>
+    </div>
+
+    <script>
+        // Sample states data (this should match your states data structure)
+        const statesData = {{ states|tojson }}; // Pass the states data to JavaScript
+
+        function updateDistricts() {
+            const stateSelect = document.getElementById('state');
+            const districtSelect = document.getElementById('senatorial_district');
+            const selectedState = stateSelect.value;
+
+            // Clear existing options
+            districtSelect.innerHTML = '';
+            districtSelect.style.display = 'none'; // Hide the district dropdown initially
+
+            // Find the selected state's data
+            const stateData = statesData.find(state => state.name === selectedState);
+
+            if (stateData) {
+                // Populate the district dropdown
+                stateData.senatorial_districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.name;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+                districtSelect.style.display = 'block'; // Show the district dropdown
+            }
+        }
+    </script>
+</body>
+</html>

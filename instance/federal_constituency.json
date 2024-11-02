@@ -1,0 +1,85 @@
+{
+    "federal_constituencies": {
+        "Abia": [
+            "Aba North/Aba South",
+            "Arochukwu/Ohafia",
+            "Bende",
+            "Ikwuano/Umuahia North/Umuahia South",
+            "Isiala Ngwa North/Isiala Ngwa South",
+            "Isuikwuato/Umunneochi"
+        ],
+        "Adamawa": [
+            "Fufore/Song",
+            "Ganye/Toungo/Jada/Mayo-Belwa",
+            "Girei/Yola North/Yola South",
+            "Gombi/Hong",
+            "Madagali/Michika",
+            "Mubi North/Mubi South/Maiha",
+            "Numan/Demsa/Lamurde"
+        ],
+        "Akwa Ibom": [
+            "Abak/Etim Ekpo/Ika",
+            "Eket/Esit Eket/Ibeno/Onna",
+            "Ikot Abasi/Mkpat Enin/Essien Udim",
+            "Ikot Ekpene/Essien Udim/Obot Akara",
+            "Itu/Ibiono Ibom",
+            "Mbo/Okobo/Oron/Udung Uko/Urue Offong Oruko",
+            "Uyo/Uruan/Nsit Atai/Ibesikpo Asutan"
+        ],
+        "Anambra": [
+            "Aguata",
+            "Anambra East/Anambra West",
+            "Anaocha/Njikoka/Dunukofia",
+            "Awka North/Awka South",
+            "Idemili North/Idemili South",
+            "Ihiala",
+            "Nnewi North/Nnewi South/Ekwusigo",
+            "Ogbaru",
+            "Onitsha North/Onitsha South",
+            "Orumba North/Orumba South",
+            "Oyi/Ayamelum"
+        ],
+        "Bauchi": [
+            "Alkaleri/Kirfi",
+            "Bauchi",
+            "Bogoro/Dass/Tafawa Balewa",
+            "Dambam/Darazo/Ganjuwa",
+            "Gamawa/Zaki",
+            "Jama'are/Itas Gadau",
+            "Katagum",
+            "Misau/Dambam",
+            "Ningi/Warji",
+            "Shira/Giade",
+            "Toro"
+        ],
+        "Bayelsa": [
+            "Brass/Nembe",
+            "Ekeremor/Sagbama",
+            "Kolokuma/Opokuma/Yenagoa",
+            "Southern Ijaw"
+        ],
+        "Benue": [
+            "Ado/Ogbadibo/Okpokwu",
+            "Buruku",
+            "Gboko/Tarka",
+            "Guma/Makurdi",
+            "Gwer East/Gwer West",
+            "Katsina-Ala/Ukum/Logo",
+            "Kwande/Ushongo",
+            "Otukpo/Ohimini",
+            "Vandeikya/Konshisha"
+        ],
+        "Borno": [
+            "Abadam/Mobbar/Guzamala/Kukawa",
+            "Askira-Uba/Hawul",
+            "Bama/Ngala/Kala-Balge",
+            "Biu/Bayo/Kwaya Kusar/Shani",
+            "Chibok/Damboa/Gwoza",
+            "Jere",
+            "Konduga/Mafa/Dikwa",
+            "Monguno/Marte/Nganzai",
+            "Maiduguri",
+            "Shani/Bayo/Biu/Kwaya Kusar"
+        ]
+    }
+}

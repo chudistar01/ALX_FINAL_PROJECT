@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #333;
+            --background-color: #f4f4f9;
+            --input-border-color: #ddd;
+            --radius: 8px;
+            --transition: 0.3s ease;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Login Container */
+        .login-container {
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .login-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Flash Messages */
+        .flash-messages {
+            margin-bottom: 1rem;
+        }
+        .flash-message {
+            padding: 10px;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            text-align: left;
+            color: white;
+        }
+        .flash-message.error { background-color: #f44336; }
+        .flash-message.success { background-color: var(--primary-color); }
+
+        /* Form Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--input-border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            color: var(--secondary-color);
+            background-color: #fafafa;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color var(--transition), transform var(--transition);
+        }
+        .btn:hover { background-color: #388E3C; }
+        .btn:active { transform: scale(0.98); }
+
+        /* Accessibility */
+        input:focus-visible,
+        button:focus-visible {
+            outline: 2px dashed var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-container { animation: fadeIn 0.5s ease-in-out; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+
+        <!-- Display flash messages for errors or success -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Login form -->
+        <form action="{{ url_for('admin.login_admin') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+</body>
+</html>

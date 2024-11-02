@@ -1,38 +1,50 @@
 from flask import render_template, request, flash, redirect, url_for, session
+from werkzeug.security import check_password_hash
 from . import admin_bp
-from .. import mongo
+from ..extensions import mongo
 
+@admin_bp.route('/dashboard')
+def admin_dashboard():
+    if 'admin_id' in session:
+        admin_id = session['admin_id']
+        admin_username = session['admin_username']
+        return render_template('admin_dashboard.html', admin_id=admin_id, admin_username=admin_username)
+    else:
+        flash('You must log in to access the dashboard.', 'warning')
+        return redirect(url_for('admin_bp.login_admin'))  # Redirect to login if not logged in
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login_admin():
     if request.method == 'POST':
-        # Get form data
-        admin_id = request.form.get('admin_id')
+        # Get login credentials from the form
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # Validate the data (basic example)
-        if not admin_id or not username or not password:
-            flash('All fields are required!', 'error')
-            return redirect(url_for('register_admin'))
+        # Check if all fields are filled
+        if not username or not password:
+            flash('Username and password are required!', 'error')
+            return redirect(url_for('admin.login_admin'))
 
-        # Hash the password before storing it
-        hashed_password = generate_password_hash(password)
+        # Find the admin user in MongoDB by username
+        admin = mongo.db.admins.find_one({'username': username})
 
-        # Create a new admin document
-        admin_data = {
-            'admin_id': admin_id,
-            'username': username,
-            'password': hashed_password  # Store hashed password for security
-        }
+        # Verify the password
+        if admin and check_password_hash(admin['password'], password):
+            session['admin_id'] = admin['admin_id']
+            session['admin_username'] = admin['username']
+            flash('Login successful!', 'success')
+            return redirect(url_for('admin.admin_dashboard'))  # Redirect to the dashboard
 
-        # Insert the admin document into the MongoDB collection
-        mongo.db.admins.insert_one(admin_data)
+        # If the login fails, show an error message
+        flash('Invalid username or password!', 'error')
+        return redirect(url_for('admin.login_admin'))
 
-        # Flash a success message
-        flash('Admin user created successfully!', 'success')
-        return redirect(url_for('register_admin'))  # Redirect after POST
+    # Render the login form template for GET requests
+    return render_template('login_admin.html')
 
-    return render_template('register_admin.html')  # Render form template
-
-# Example route for testing MongoDB connection
+@admin_bp.route('/logout')
+def logout_admin():
+    session.pop('admin_id', None)  # Clear the admin ID from the session
+    session.pop('admin_username', None)  # Also clear the username
+    flash('Logged out successfully!', 'success')
+    return redirect(url_for('admin.login_admin'))  # Redirect to login after logout
